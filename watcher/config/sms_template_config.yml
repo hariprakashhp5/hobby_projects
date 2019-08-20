@@ -1,0 +1,15 @@
+data_type:
+  amount: float
+
+
+patterns:
+
+  - pattern: '^Hello (\w+)$'
+    schema:
+      0: name
+  - pattern: '^Hello (\w+), ([0-9,.]+) has been (\w+) from your (\w+) bank Account$'
+    schema:
+      0: name
+      1: amount
+      2: transaction_type
+      3: bank_name
