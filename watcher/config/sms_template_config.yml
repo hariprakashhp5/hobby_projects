@@ -1,15 +1,47 @@
 data_type:
   amount: float
+  upi_ref_no: int
+  aval_blnc: float
+  debited_amount: float
 
+
+schemas:
+  upi: &upi_schema
+    0: hidden_acc_no
+    1: transaction_type
+    2: amount
+    3: upi_id
+    4: upi_ref_no
 
 patterns:
 
   - pattern: '^Hello (\w+)$'
     schema:
       0: name
-  - pattern: '^Hello (\w+), ([0-9,.]+) has been (\w+) from your (\w+) bank Account$'
+  - pattern: '^Dear Customer, acct (\w+) is (\w+) with Rs.([0-9,.]+) on \d+-\w+-\d+ from (\w+@\w+).\s?UPI Ref no (\d+)$'
     schema:
-      0: name
-      1: amount
-      2: transaction_type
-      3: bank_name
+      <<: *upi_schema
+  - pattern: '^Acct (\w+) (\w+) with INR([0-9,.]+) on \d+-\w+-\d+ and (\w+@\w+) credited.Info:UPI-(\d+).*$'
+    schema:
+      <<: *upi_schema
+  - pattern: '^Acct (\w+) (\w+) with INR([0-9,.]+) on \d+-\w+-\d+.Info:(.*).Avbl Bal:INR([0-9,.]+).Call.*$'
+    schema:
+      0: hidden_acc_no
+      1: transaction_type
+      2: debited_amount
+      3: info
+      4: aval_blnc
+  - pattern: '^(Txn) of INR ([0-9,.]+) done on Acct (\w+) on \d+-\w+-\d+.Info:(.*).Avbl Bal:INR([0-9,.]+).Call.*66$'
+    schema:
+      0: transaction_type
+      1: debited_amount
+      2: hidden_acc_no
+      3: info
+      4: aval_blnc
+    ## TODO: Fix the below pattern
+  - pattern: '^ALERT:Youve spent Rs.([0-9,.]+) via Debit Card (\w+) at (\w.*) on \d+-\d+-\d+:\d+:\d+:\d+.Avl Bal Rs.([0-9.,]+).Not.*$'
+    schema:
+      0: debited_amount
+      1: hidden_card_no
+      2: info
+      3: aval_blnc
