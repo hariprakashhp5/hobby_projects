@@ -1,17 +1,23 @@
 data_type:
-  amount: float
+  imps_info: int
   upi_ref_no: int
+  acc_blnc: float
   aval_blnc: float
-  debited_amount: float
+  transaction_amount: float
 
 
 schemas:
   upi: &upi_schema
     0: hidden_acc_no
     1: transaction_type
-    2: amount
+    2: transaction_amount
     3: upi_id
     4: upi_ref_no
+  icici_imps_other_bank: &icici_imps_other_bank
+    0: hidden_acc_no
+    1: transaction_type
+    2: transaction_amount
+    3: imps_ref_no
 
 patterns:
 
@@ -28,20 +34,47 @@ patterns:
     schema:
       0: hidden_acc_no
       1: transaction_type
-      2: debited_amount
+      2: transaction_amount
       3: info
       4: aval_blnc
   - pattern: '^(Txn) of INR ([0-9,.]+) done on Acct (\w+) on \d+-\w+-\d+.Info:(.*).Avbl Bal:INR([0-9,.]+).Call.*66$'
     schema:
       0: transaction_type
-      1: debited_amount
+      1: transaction_amount
       2: hidden_acc_no
       3: info
       4: aval_blnc
-    ## TODO: Fix the below pattern
-  - pattern: '^ALERT:Youve spent Rs.([0-9,.]+) via Debit Card (\w+) at (\w.*) on \d+-\d+-\d+:\d+:\d+:\d+.Avl Bal Rs.([0-9.,]+).Not.*$'
+  - pattern: '^Dear Customer, Your a\/c no. (\w+) is (\w+) by Rs.([0-9,.]+) on \d+-\w+-\d+ \d+:\d+:\d+ by a\/c linked to mobile \w+. \(IMPS Ref no (\d+)\).$'
     schema:
-      0: debited_amount
+      <<: *icici_imps_other_bank
+  - pattern: '^Acct (\w+) (\w+) with INR ([0-9,.]+) on \d+-\w+-\d+ & Acct \w+ credited. IMPS: (\d+).*'
+    schema:
+      <<: *icici_imps_other_bank
+  - pattern: '^Rs.([0-9,.]+) (\w+) to \w+-(\w+) AcBal:([0-9,.]+) CLRBal: ([0-9,.]+) \[(\w+\/\w+)\s+?\].*'
+    schema:
+      0: transaction_amount
+      1: transaction_type
+      2: hidden_acc_no
+      3: acc_blnc
+      4: aval_blnc
+      5: info
+  - pattern: "^ALERT:You've spent Rs.([0-9,.]+) via Debit Card (\\w+) at (\\w.*) on \\d+-\\d+-\\d+:\\d+:\\d+:\\d+.Avl Bal Rs.([0-9.,]+).Not.*$"
+    schema:
+      0: transaction_amount
       1: hidden_card_no
       2: info
       3: aval_blnc
+  - pattern: '^Rs.? ([0-9,.]+) (\w+) \w+ a\/c (\**\w+|\w+) on \d+-\w+-\d+ \w+.*VPA\s+?([a-z-0-9]+@[a-z-0-9]+)\s?\(UPI Ref No\s+?(\d+).*'
+    schema:
+      0: transaction_amount
+      1: transaction_type
+      2: hidden_acc_no
+      3: upi_id
+      4: upi_ref_no
+  - pattern: '^UPDATE: A\/c (\w+) (\w+) \w+ INR ([0-9,.]+) \w+ \d+-\w+-\d+ & A\/c (\w+) \w+ \(IMPS Ref No.(\d+)\).Avl bal:INR ([0-9,.]+).Not.*'
+    schema:
+      0: hidden_acc_no
+      1: transaction_type
+      2: transaction_amount
+      3: imps_ref_no
+      4: aval_blnc
