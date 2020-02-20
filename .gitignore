@@ -2,3 +2,4 @@
 venv/
 watcher/mqtt_modules/__pycache__/
 watcher/watcher_modules/__pycache__/
+flask_app/notebooks/
