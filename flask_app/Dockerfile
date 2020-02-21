@@ -8,4 +8,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt; \
     rm -rf /var/cache/apk/*
 COPY . /app
 EXPOSE 3039
-CMD ['python', 'app.py']
+CMD ["python", "app.py"]
