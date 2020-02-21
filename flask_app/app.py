@@ -1,3 +1,7 @@
+
+import sys
+from os.path import abspath, dirname
+sys.path.append(dirname(dirname(abspath(__file__))))
 from flask import Flask, request, jsonify
 from flask_app.modules.model_factory import get_model
 
