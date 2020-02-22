@@ -34,7 +34,7 @@ def imagePrune(containerName){
 }
 
 def imageBuild(containerName, tag){
-    sh "docker build -t $containerName:$tag -f Docker/${containerName}_dockerfile ."
+    sh "docker build -t $containerName:$tag -f Docker/${containerName}.df ."
     echo "Image build complete"
 }
 
