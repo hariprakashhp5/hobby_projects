@@ -7,4 +7,4 @@ WORKDIR /py_project
 RUN pip install  -r requirements.txt;
 COPY . /py_project
 EXPOSE 3039
-CMD ["python", "app.py"]
+CMD ["python", "flask_app.py"]
