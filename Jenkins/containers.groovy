@@ -1,4 +1,3 @@
-def HTTP_PORT="3039"
 
 node {
 
@@ -21,7 +20,7 @@ node {
 
 
     stage('Run App'){
-        runApp(env.CONTAINER_NAME, env.CONTAINER_TAG, HTTP_PORT, env.HOST_PORT)
+        runApp(env.CONTAINER_NAME, env.CONTAINER_TAG, env.CONTAINER_PORT, env.HOST_PORT)
     }
 
 }
