@@ -1,7 +1,4 @@
-def CONTAINER_NAME="flask-app"
-def CONTAINER_TAG="latest"
 def HTTP_PORT="3039"
-def HOST_PORT="3039"
 
 node {
 
@@ -15,16 +12,16 @@ node {
     }
 
     stage("Image Prune"){
-        imagePrune(CONTAINER_NAME)
+        imagePrune(env.CONTAINER_NAME)
     }
 
     stage('Image Build'){
-        imageBuild(CONTAINER_NAME, CONTAINER_TAG)
+        imageBuild(env.CONTAINER_NAME, env.CONTAINER_TAG)
     }
 
 
     stage('Run App'){
-        runApp(CONTAINER_NAME, CONTAINER_TAG, HTTP_PORT, HOST_PORT)
+        runApp(env.CONTAINER_NAME, env.CONTAINER_TAG, HTTP_PORT, env.HOST_PORT)
     }
 
 }
@@ -37,8 +34,7 @@ def imagePrune(containerName){
 }
 
 def imageBuild(containerName, tag){
-    //sh "docker build -t $containerName:$tag --no-cache ./Docker/"
-    sh "docker build -t $containerName:$tag --no-cache -f Docker/Dockerfile ."
+    sh "docker build -t $containerName:$tag -f Docker/Dockerfile ."
     echo "Image build complete"
 }
 
