@@ -1,6 +1,6 @@
 
 import numpy as np
-from flask_app.trained_models import available_models
+from ml.trained_models import  available_models
 
 
 class SVMModel:

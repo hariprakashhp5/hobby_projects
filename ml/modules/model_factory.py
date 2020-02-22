@@ -1,5 +1,5 @@
 
-from flask_app.modules.svm_model import SVMModel
+from ml.modules.svm_model import SVMModel
 
 model_map = dict(
     svm=SVMModel

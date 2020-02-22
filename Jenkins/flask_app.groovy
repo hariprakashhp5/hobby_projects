@@ -37,7 +37,7 @@ def imagePrune(containerName){
 }
 
 def imageBuild(containerName, tag){
-    sh "docker build -t $containerName:$tag --no-cache ./flask_app/"
+    sh "docker build -t $containerName:$tag --no-cache ./Docker/"
     echo "Image build complete"
 }
 

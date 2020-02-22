@@ -1,8 +1,7 @@
 
 import glob
-from os import path
-# from sklearn.externals import joblib
 import joblib
+from os import path
 
 current_dir = path.dirname(__file__)
 available_models = dict()
