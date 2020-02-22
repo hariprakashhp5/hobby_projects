@@ -34,15 +34,8 @@ def imagePrune(containerName){
 }
 
 def imageBuild(containerName, tag){
-    sh "docker build -t $containerName:$tag -f Docker/Dockerfile ."
+    sh "docker build --target $containerName -t $containerName:$tag -f Docker/Dockerfile ."
     echo "Image build complete"
-}
-
-def pushToImage(containerName, tag, dockerUser, dockerPassword){
-    sh "docker login -u $dockerUser -p $dockerPassword"
-    sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-    sh "docker push $dockerUser/$containerName:$tag"
-    echo "Image push complete"
 }
 
 def runApp(containerName, tag, httpPort, hostPort){
