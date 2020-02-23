@@ -7,11 +7,18 @@ pipeline {
     }
     stages {
 		stage('Initialize'){
-            def dockerHome = tool 'myDocker'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
+		    steps {
+		        script{
+                    def dockerHome = tool 'myDocker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
+                echo env.PATH
+		    }
         }
 
         stage('Checkout') {
+            echo '############'
+            echo env.PATH
             checkout scm
         }
         stage('Build Flask App Image') {
