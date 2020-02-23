@@ -16,9 +16,6 @@ pipeline {
 		    }
         }
 
-        stage('Checkout') {
-            checkout scm
-        }
         stage('Build Flask App Image') {
 			when { expression { params.flask_app } }
 			agent {
