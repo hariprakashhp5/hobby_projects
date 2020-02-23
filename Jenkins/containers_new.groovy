@@ -17,8 +17,6 @@ pipeline {
         }
 
         stage('Checkout') {
-            echo '############'
-            echo env.PATH
             checkout scm
         }
         stage('Build Flask App Image') {
@@ -31,6 +29,7 @@ pipeline {
 				}			
 			}
             steps {
+               echo env.PATH
                echo 'Done!'
             }
         }
