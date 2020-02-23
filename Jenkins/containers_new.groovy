@@ -19,7 +19,7 @@ pipeline {
 				dockerfile {
 					filename 'Docker/flask_app.df'
 					dir '.'
-					tag 'latest'
+					args '-t latest'
 				}			
 			}
             steps {
@@ -32,7 +32,7 @@ pipeline {
 				dockerfile {
 					filename 'Docker/grafana.df'
 					dir '.'
-					tag 'v6.6.2'
+					args '-t v6.6.2'
 				}			
 			}
             steps {
