@@ -1,0 +1,56 @@
+version: '3.2'
+
+services:
+
+  flask_app:
+    image: flask_app:latest
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://0.0.0.0:5514"
+        mode: non-blocking
+        max-buffer-size: 10m
+        tag: "{{.Name}}"
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3039:3039"
+    container_name: flask_app
+    networks:
+      - hobs
+
+  grafana:
+    image: grafana:v6.6.2
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://0.0.0.0:5514"
+        mode: non-blocking
+        max-buffer-size: 10m
+        tag: "{{.Name}}"
+      deploy:
+        restart_policy:
+          condition: on-failure
+      ports:
+        - "3456:3000"
+        container_name: grafana
+        networks:
+          - hobs
+
+  rsyslog:
+    image: voxxit/rsyslog
+    ports:
+      - "5514:514/udp"
+    volumes:
+      - /tmp/clog:/var/log
+    container_name: rsyslog.service
+    networks:
+      - hobs
+
+networks:
+  hobs:
+
+#volumes:
+#  jenkins-store:
+#    driver: local
