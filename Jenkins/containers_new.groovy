@@ -6,15 +6,14 @@ pipeline {
         booleanParam(name: 'clickhouse', defaultValue: true, description: 'Build Clickhouse DB Image')
     }
     stages {
-		stage('Setup') {
-			steps {
-			    def dockerHome = tool 'myDocker'
-                env.PATH = "${dockerHome}/bin:${env.PATH}"
-				script {
-					echo "Dummy Setup"
-				}
-			}
-		}
+		stage('Initialize'){
+            def dockerHome = tool 'myDocker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
+
+        stage('Checkout') {
+            checkout scm
+        }
         stage('Build Flask App Image') {
 			when { expression { params.flask_app } }
 			agent {
