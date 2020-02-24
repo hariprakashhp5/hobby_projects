@@ -7,29 +7,18 @@ pipeline {
 		            def dockerHome = tool 'myDocker'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
 		        }
-		        echo "!!!!!!!!!!!!!!!!!!!!!"
-		        echo env.PATH
 		    }
         }
 
         stage('Build Flask App Image') {
-            agent {
-				dockerfile {
-					filename 'Docker/flask_app.df'
-					dir '.'
-					args '-t flask_app:latest'
-				}
-			}
             steps {
-               echo env.PATH
-               sh "docker --version"
+               sh "docker build -t flask_app:latest -f Docker/flask_app.df ."
             }
         }
 
-        stage('step 2') {
+        stage('Build Grafana Image') {
             steps {
-               echo env.PATH
-               sh "docker --version"
+               sh "docker build -t grafana:v6.6.2 -f Docker/grafana.df ."
             }
         }
     }
