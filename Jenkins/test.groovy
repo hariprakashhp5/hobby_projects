@@ -15,7 +15,14 @@ pipeline {
         stage('Build Flask App Image') {
             steps {
                echo env.PATH
-               echo 'Done!'
+               sh "docker --version"
+            }
+        }
+
+        stage('step 2') {
+            steps {
+               echo env.PATH
+               sh "docker --version"
             }
         }
     }
