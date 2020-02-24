@@ -34,6 +34,8 @@ services:
         condition: on-failure
     ports:
       - "3456:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
     container_name: grafana
     networks:
       - hobs
@@ -50,3 +52,6 @@ services:
 
 networks:
   hobs:
+
+volumes:
+  grafana-storage:
