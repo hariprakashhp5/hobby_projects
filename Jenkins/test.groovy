@@ -13,6 +13,13 @@ pipeline {
         }
 
         stage('Build Flask App Image') {
+            agent {
+				dockerfile {
+					filename 'Docker/flask_app.df'
+					dir '.'
+					args '-t flask_app:latest'
+				}
+			}
             steps {
                echo env.PATH
                sh "docker --version"
