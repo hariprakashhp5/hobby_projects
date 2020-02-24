@@ -34,9 +34,9 @@ services:
           condition: on-failure
       ports:
         - "3456:3000"
-        container_name: grafana
-        networks:
-          - hobs
+      container_name: grafana
+      networks:
+        - hobs
 
   rsyslog:
     image: voxxit/rsyslog
