@@ -29,14 +29,14 @@ services:
         mode: non-blocking
         max-buffer-size: 10m
         tag: "{{.Name}}"
-      deploy:
-        restart_policy:
-          condition: on-failure
-      ports:
-        - "3456:3000"
-      container_name: grafana
-      networks:
-        - hobs
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3456:3000"
+    container_name: grafana
+    networks:
+      - hobs
 
   rsyslog:
     image: voxxit/rsyslog
