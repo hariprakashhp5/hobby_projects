@@ -22,7 +22,7 @@ pipeline {
 				dockerfile {
 					filename 'Docker/flask_app.df'
 					dir '.'
-					args '-t latest'
+					args '-t flask_app:latest'
 				}			
 			}
             steps {
