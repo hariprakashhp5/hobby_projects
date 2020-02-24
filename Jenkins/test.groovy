@@ -1,11 +1,21 @@
 pipeline {
-    agent {
-        docker { image 'node:7-alpine' }
-    }
+    agent {label 'master'}
     stages {
-        stage('Test') {
+		stage('Initialize'){
+		    steps {
+		        script {
+		            def dockerHome = tool 'myDocker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+		        }
+		        echo "!!!!!!!!!!!!!!!!!!!!!"
+		        echo env.PATH
+		    }
+        }
+
+        stage('Build Flask App Image') {
             steps {
-                sh 'node --version'
+               echo env.PATH
+               echo 'Done!'
             }
         }
     }
