@@ -31,4 +31,5 @@ RUN grafana-cli plugins install vertamedia-clickhouse-datasource
 ENV GF_USERS_DEFAULT_THEME light
 ENV GF_AUTH_ANONYMOUS_ENABLED true
 ENV GF_AUTH_ANONYMOUS_ORG_ROLE Viewer
+ENV GF_PANELS_DISABLE_SANITIZE_HTML true
 CMD ["/run.sh"]
