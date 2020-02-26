@@ -28,7 +28,9 @@ ARG GF_INSTALL_PLUGINS="alexandra-trackmap-panel,\
                         snuids-radar-panel,\
                         snuids-trafficlights-panel,\
                         vertamedia-clickhouse-datasource,\
-                        vonage-status-panel"
+                        vonage-status-panel,\
+                        grafana-piechart-panel,\
+                        grafana-worldmap-panel"
 
 RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
     OLDIFS=$IFS; \
