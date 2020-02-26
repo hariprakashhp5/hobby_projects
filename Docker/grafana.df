@@ -5,8 +5,30 @@ RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plu
 USER grafana
 ENV GF_PATHS_PLUGINS="/data/grafana/plugins"
 
-ARG GF_INSTALL_PLUGINS="savantly-heatmap-panel,jdbranham-diagram-panel,\
-                        vertamedia-clickhouse-datasource"
+ARG GF_INSTALL_PLUGINS="alexandra-trackmap-panel,\
+                        blackmirror1-singlestat-math-panel,\
+                        briangann-datatable-panel,\
+                        citilogics-geoloop-panel,\
+                        digiapulssi-organisations-panel,\
+                        digrich-bubblechart-panel,\
+                        flant-statusmap-panel,\
+                        grafana-clock-panel,\
+                        grafana-polystat-panel,\
+                        grafana-simple-json-datasource,\
+                        gretamosa-topology-panel,\
+                        jdbranham-diagram-panel,\
+                        marcuscalidus-svg-panel,\
+                        mtanda-histogram-panel,\
+                        mxswat-separator-panel,\
+                        natel-plotly-panel,\
+                        petrslavotinek-carpetplot-panel,\
+                        pr0ps-trackmap-panel,\
+                        ryantxu-ajax-panel,\
+                        savantly-heatmap-panel,\
+                        snuids-radar-panel,\
+                        snuids-trafficlights-panel,\
+                        vertamedia-clickhouse-datasource,\
+                        vonage-status-panel"
 
 RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
     OLDIFS=$IFS; \
@@ -17,30 +39,7 @@ RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
     done; \
 fi
 
-# RUN grafana-cli plugins install grafana-clock-panel
-# RUN grafana-cli plugins install natel-plotly-panel
-# RUN grafana-cli plugins install grafana-polystat-panel
-# RUN grafana-cli plugins install snuids-radar-panel
-# RUN grafana-cli plugins install mxswat-separator-panel
-# RUN grafana-cli plugins install blackmirror1-singlestat-math-panel
-# RUN grafana-cli plugins install vonage-status-panel
-# RUN grafana-cli plugins install flant-statusmap-panel
-# RUN grafana-cli plugins install gretamosa-topology-panel
-# RUN grafana-cli plugins install alexandra-trackmap-panel
-# RUN grafana-cli plugins install snuids-trafficlights-panel
-# RUN grafana-cli plugins install pr0ps-trackmap-panel
-# RUN grafana-cli plugins install marcuscalidus-svg-panel
-# RUN grafana-cli plugins install digiapulssi-organisations-panel
-# RUN grafana-cli plugins install mtanda-histogram-panel
-# RUN grafana-cli plugins install citilogics-geoloop-panel
-RUN grafana-cli plugins install savantly-heatmap-panel
-RUN grafana-cli plugins install jdbranham-diagram-panel
-# RUN grafana-cli plugins install petrslavotinek-carpetplot-panel
-# RUN grafana-cli plugins install briangann-datatable-panel
-# RUN grafana-cli plugins install digrich-bubblechart-panel
-# RUN grafana-cli plugins install ryantxu-ajax-panel
-# RUN grafana-cli plugins install grafana-simple-json-datasource
-# RUN grafana-cli plugins install vertamedia-clickhouse-datasource
+
 ENV GF_USERS_DEFAULT_THEME=light \
     GF_AUTH_ANONYMOUS_ENABLED=true \
     GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer \
