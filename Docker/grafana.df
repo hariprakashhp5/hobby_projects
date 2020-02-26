@@ -1,9 +1,9 @@
 
 FROM grafana/grafana:6.6.2-ubuntu
-USER root
-RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plugins
-USER grafana
-ENV GF_PLUGIN_DIR /data/grafana/plugins
+# USER root
+# RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plugins
+# USER grafana
+# ENV GF_PLUGIN_DIR /data/grafana/plugins
 # RUN grafana-cli plugins install grafana-clock-panel
 # RUN grafana-cli plugins install natel-plotly-panel
 # RUN grafana-cli plugins install grafana-polystat-panel
