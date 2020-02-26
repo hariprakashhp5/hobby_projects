@@ -1,9 +1,9 @@
 
 FROM grafana/grafana:6.6.2-ubuntu
-# USER root
-# RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plugins
-# USER grafana
-# ENV GF_PLUGIN_DIR /data/grafana/plugins
+USER root
+RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plugins
+USER grafana
+ENV GF_PATHS_PLUGINS="/data/grafana/plugins"
 # RUN grafana-cli plugins install grafana-clock-panel
 # RUN grafana-cli plugins install natel-plotly-panel
 # RUN grafana-cli plugins install grafana-polystat-panel
@@ -28,8 +28,8 @@ RUN grafana-cli plugins install jdbranham-diagram-panel
 # RUN grafana-cli plugins install ryantxu-ajax-panel
 # RUN grafana-cli plugins install grafana-simple-json-datasource
 # RUN grafana-cli plugins install vertamedia-clickhouse-datasource
-ENV GF_USERS_DEFAULT_THEME light
-ENV GF_AUTH_ANONYMOUS_ENABLED true
-ENV GF_AUTH_ANONYMOUS_ORG_ROLE Viewer
-ENV GF_PANELS_DISABLE_SANITIZE_HTML true
+ENV GF_USERS_DEFAULT_THEME=light \
+    GF_AUTH_ANONYMOUS_ENABLED=true \
+    GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer \
+    GF_PANELS_DISABLE_SANITIZE_HTML=true
 CMD ["/run.sh"]
