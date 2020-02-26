@@ -4,6 +4,19 @@ USER root
 RUN mkdir -p /data/grafana/plugins && chown -R grafana:grafana /data/grafana/plugins
 USER grafana
 ENV GF_PATHS_PLUGINS="/data/grafana/plugins"
+
+ARG GF_INSTALL_PLUGINS="savantly-heatmap-panel,jdbranham-diagram-panel,\
+                        vertamedia-clickhouse-datasource"
+
+RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
+    OLDIFS=$IFS; \
+        IFS=','; \
+    for plugin in ${GF_INSTALL_PLUGINS}; do \
+        IFS=$OLDIFS; \
+        grafana-cli --pluginsDir "$GF_PATHS_PLUGINS" plugins install ${plugin}; \
+    done; \
+fi
+
 # RUN grafana-cli plugins install grafana-clock-panel
 # RUN grafana-cli plugins install natel-plotly-panel
 # RUN grafana-cli plugins install grafana-polystat-panel
