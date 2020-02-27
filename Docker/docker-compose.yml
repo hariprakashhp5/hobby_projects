@@ -67,6 +67,23 @@ services:
     networks:
       - hobs
 
+  jenkins:
+    image: datasights/jenkins:latest
+    deploy:
+      restart_policy:
+      condition: on-failure
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    privileged: true
+    user: root
+    container_name: jenkinsapp
+    volumes:
+      - jenkins-store:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - hobs
+
   rsyslog:
     image: voxxit/rsyslog
     ports:
