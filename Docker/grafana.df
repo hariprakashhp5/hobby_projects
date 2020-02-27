@@ -41,8 +41,8 @@ RUN if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then \
     done; \
 fi
 
-ARGS GUAI
-ARGS GTMI
+ARG GUAI
+ARG GTMI
 
 ENV GF_USERS_DEFAULT_THEME=light \
     GF_AUTH_ANONYMOUS_ENABLED=true \
