@@ -34,7 +34,7 @@ pipeline {
         stage('Build Grafana Image') {
             when { expression { params.grafana } }
             steps {
-               sh "docker build --build-arg GUAI=params.GUAI --build-arg GTMI=params.GTMI -t grafana:v6.6.2 -f Docker/grafana.df ."
+               sh "docker build --build-arg GUAI=${params.GUAI} --build-arg GTMI=${params.GTMI} -t grafana:v6.6.2 -f Docker/grafana.df ."
                step([
                     $class: 'DockerComposeBuilder',
                     dockerComposeFile: 'Docker/docker-compose.yml',
