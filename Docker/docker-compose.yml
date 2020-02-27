@@ -98,5 +98,6 @@ networks:
   hobs:
 
 volumes:
+  jenkins-store:
   grafana-storage:
   clickhouse-storage:
