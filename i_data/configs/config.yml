@@ -1,0 +1,4 @@
+
+triggers:
+  corona:
+    controller: corona

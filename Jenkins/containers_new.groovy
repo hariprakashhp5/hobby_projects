@@ -59,7 +59,12 @@ pipeline {
         stage('Build Clickhouse Image') {
             when { expression { params.clickhouse } }
             steps {
-               echo "YTD"
+               step([
+                    $class: 'DockerComposeBuilder',
+                    dockerComposeFile: 'Docker/docker-compose.yml',
+                    option: [$class: 'StartService', scale: 1, service: 'clickhouse'],
+                    useCustomDockerComposeFile: true
+               ])
             }
         }
     }
