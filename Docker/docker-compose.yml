@@ -14,12 +14,12 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+    volumes:
+      - /etc/backend_app/backend.env:/etc/backend_app/backend.env
     ports:
       - "3039:3039"
     container_name: flask_app
-    environment:
-      - PYTHONPATH=.
-      - CH_HOST=localhost
+    env_file: /etc/backend_app/backend.env
     networks:
       - hobs
 
