@@ -22,28 +22,28 @@ pipeline {
         stage('Build Flask App Image') {
             when { expression { params.flask_app } }
             steps {
-               sh "KK=${params.KAGGLE_KEY} KU=${params.KAGGLE_USERNAME} docker-compose -f ${env.COMPOSE_FILE} up flask_app"
+               sh "KK=${params.KAGGLE_KEY} KU=${params.KAGGLE_USERNAME} docker-compose -f ${env.COMPOSE_FILE} up -d flask_app"
             }
         }
 
         stage('Build Grafana Image') {
             when { expression { params.grafana } }
             steps {
-               sh "GUAI=${params.GUAI} GTMI=${params.GTMI} docker-compose -f ${env.COMPOSE_FILE} up grafana"
+               sh "GUAI=${params.GUAI} GTMI=${params.GTMI} docker-compose -f ${env.COMPOSE_FILE} up -d grafana"
             }
         }
 
         stage('Spinup rSyslog') {
             when { expression { params.rsyslog } }
             steps {
-               sh "docker-compose -f ${env.COMPOSE_FILE} up rsyslog"
+               sh "docker-compose -f ${env.COMPOSE_FILE} up -d rsyslog"
             }
         }
 
         stage('Build Clickhouse Image') {
             when { expression { params.clickhouse } }
             steps {
-               sh "docker-compose -f ${env.COMPOSE_FILE} up clickhouse"
+               sh "docker-compose -f ${env.COMPOSE_FILE} up -d clickhouse"
             }
         }
     }
