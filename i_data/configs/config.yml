@@ -2,3 +2,8 @@
 triggers:
   corona:
     controller: corona
+
+  world_cities:
+    controller: world_cities
+    db_name: world
+    table_name: cities

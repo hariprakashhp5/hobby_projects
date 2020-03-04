@@ -7,7 +7,9 @@ MergeTree = """
 				SETTINGS index_granularity = 8192
 			"""
 
-engines = dict(mergetree=MergeTree)
+Join = """ENGINE = Join(ANY, LEFT, {0})"""
+
+engines = dict(mergetree=MergeTree, join=Join)
 
 
 class CHTable:
