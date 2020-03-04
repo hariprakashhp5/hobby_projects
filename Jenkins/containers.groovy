@@ -3,8 +3,6 @@ pipeline {
     parameters {
         booleanParam(name: 'flask_app', defaultValue: true, description: 'Build Generic Python Backend application Image & spin a container')
         booleanParam(name: 'grafana', defaultValue: true, description: 'Build Grafana Image & spin a container')
-        string(name: 'GUAI', defaultValue: '', description: 'Google Analytics UA ID')
-        string(name: 'GTMI', defaultValue: '', description: 'Google Tag Manager ID')
         booleanParam(name: 'rsyslog', defaultValue: true, description: 'Create rSyslog Container')
         booleanParam(name: 'clickhouse', defaultValue: true, description: 'Build Clickhouse DB Image & spin a container')
     }
