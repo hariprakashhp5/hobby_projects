@@ -25,7 +25,6 @@ services:
     ports:
       - "3039:3039"
     container_name: flask_app
-    env_file: /etc/backend_app/backend.env
     networks:
       - hobs
 
