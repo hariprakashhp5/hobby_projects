@@ -12,7 +12,7 @@ pipeline {
 
         stage('Update Corona DataSet') {
             steps {
-               sh "docker exec -it flask_app python /py_project/i_data/script.py -t corona"
+               sh "docker exec -i flask_app python /py_project/i_data/script.py -t corona"
             }
         }
 

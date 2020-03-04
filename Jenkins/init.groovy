@@ -18,14 +18,14 @@ pipeline {
         stage('Ingest World Cities Data') {
             when { expression { params.WorldCities } }
             steps {
-               sh "docker exec -it flask_app python ${env.SCRIPT} -t world_cities"
+               sh "docker exec -i flask_app python ${env.SCRIPT} -t world_cities"
             }
         }
 
         stage('Ingest Iris Data') {
             when { expression { params.Iris } }
             steps {
-               sh "docker exec -it flask_app python ${env.SCRIPT} -t iris"
+               sh "docker exec -i flask_app python ${env.SCRIPT} -t iris"
             }
         }
 
