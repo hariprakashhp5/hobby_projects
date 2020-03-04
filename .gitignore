@@ -1,2 +1,4 @@
 .idea/
 venv/
+!i_data/data/worldcities.csv
+i_data/data/

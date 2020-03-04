@@ -1,43 +1,50 @@
-
-node {
-
-    stage('Initialize'){
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
+pipeline {
+    agent {label 'master'}
+    parameters {
+        booleanParam(name: 'flask_app', defaultValue: true, description: 'Build Generic Python Backend application Image & spin a container')
+        booleanParam(name: 'grafana', defaultValue: true, description: 'Build Grafana Image & spin a container')
+        string(name: 'GUAI', defaultValue: '', description: 'Google Analytics UA ID')
+        string(name: 'GTMI', defaultValue: '', description: 'Google Tag Manager ID')
+        booleanParam(name: 'rsyslog', defaultValue: true, description: 'Create rSyslog Container')
+        booleanParam(name: 'clickhouse', defaultValue: true, description: 'Build Clickhouse DB Image & spin a container')
     }
+    stages {
+		stage('Initialize'){
+		    steps {
+		        script {
+		            def dockerHome = tool 'myDocker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    env.COMPOSE_FILE = "Docker/docker-compose.yml"
+		        }
+		    }
+        }
 
-    stage('Checkout') {
-        checkout scm
+        stage('Build Flask App Image') {
+            when { expression { params.flask_app } }
+            steps {
+               sh "KK=${params.KAGGLE_KEY} KU=${params.KAGGLE_USERNAME} docker-compose -f ${env.COMPOSE_FILE} up flask_app"
+            }
+        }
+
+        stage('Build Grafana Image') {
+            when { expression { params.grafana } }
+            steps {
+               sh "GUAI=${params.GUAI} GTMI=${params.GTMI} docker-compose -f ${env.COMPOSE_FILE} up grafana"
+            }
+        }
+
+        stage('Spinup rSyslog') {
+            when { expression { params.rsyslog } }
+            steps {
+               sh "docker-compose -f ${env.COMPOSE_FILE} up rsyslog"
+            }
+        }
+
+        stage('Build Clickhouse Image') {
+            when { expression { params.clickhouse } }
+            steps {
+               sh "docker-compose -f ${env.COMPOSE_FILE} up clickhouse"
+            }
+        }
     }
-
-    stage("Image Prune"){
-        imagePrune(env.CONTAINER_NAME)
-    }
-
-    stage('Image Build'){
-        imageBuild(env.CONTAINER_NAME, env.CONTAINER_TAG)
-    }
-
-
-    stage('Run App'){
-        runApp(env.CONTAINER_NAME, env.CONTAINER_TAG, env.CONTAINER_PORT, env.HOST_PORT)
-    }
-
-}
-
-def imagePrune(containerName){
-    try {
-        sh "docker image prune -f"
-        sh "docker stop $containerName"
-    } catch(error){}
-}
-
-def imageBuild(containerName, tag){
-    sh "docker build -t $containerName:$tag -f Docker/${containerName}.df ."
-    echo "Image build complete"
-}
-
-def runApp(containerName, tag, httpPort, hostPort){
-    sh "docker run -d --rm -p $hostPort:$httpPort --name $containerName $containerName:$tag"
-    echo "Application started on port: ${hostPort} (http)"
 }

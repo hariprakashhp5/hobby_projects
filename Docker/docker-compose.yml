@@ -3,6 +3,9 @@ version: '3.2'
 services:
 
   flask_app:
+    build:
+      context: ..
+      dockerfile: Docker/flask_app.df
     image: flask_app:latest
     logging:
       driver: syslog
@@ -14,8 +17,11 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    volumes:
-      - /etc/backend_app/backend.env:/etc/backend_app/backend.env
+    environment:
+      - PYTHONPATH=.
+      - CH_HOST=localhost
+      - KAGGLE_KEY=$KK
+      - KAGGLE_USERNAME=$KU
     ports:
       - "3039:3039"
     container_name: flask_app
@@ -24,6 +30,12 @@ services:
       - hobs
 
   grafana:
+    build:
+      context: ..
+      dockerfile: Docker/grafana.df
+      args:
+        GUAI: $GUAI
+        GTMI: $GTMI
     image: grafana:v6.6.2
     logging:
       driver: syslog
