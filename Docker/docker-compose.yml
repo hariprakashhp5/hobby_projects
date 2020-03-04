@@ -19,7 +19,7 @@ services:
         condition: on-failure
     environment:
       - PYTHONPATH=.
-      - CH_HOST='172.17.0.1'
+      - CH_HOST=172.17.0.1
       - KAGGLE_KEY=$KK
       - KAGGLE_USERNAME=$KU
     ports:
